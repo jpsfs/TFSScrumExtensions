@@ -24,20 +24,20 @@ The default configuration file shipped is:
 
 	<!-- Help the tool match the defined Work Item Fields with the wizard fields -->
 	<WorkItemFieldMatches> 
-	<Field>AssignedTo</Field>
-	<Value>Assigned To</Value>
-	</WorkItemFieldMatches>
-	<WorkItemFieldMatches>
-	<Field>OriginalEstimate</Field>
-	<Value>Original Estimate</Value>
-	</WorkItemFieldMatches>
-	<WorkItemFieldMatches>
-	<Field>RemainingWork</Field>
-	<Value>Remaining Work</Value>
-	</WorkItemFieldMatches>
-	<WorkItemFieldMatches>
-	<Field>CompletedWork</Field>
-	<Value>Completed Work</Value>
+		<Field>AssignedTo</Field>
+		<Value>Assigned To</Value>
+		</WorkItemFieldMatches>
+		<WorkItemFieldMatches>
+		<Field>OriginalEstimate</Field>
+		<Value>Original Estimate</Value>
+		</WorkItemFieldMatches>
+		<WorkItemFieldMatches>
+		<Field>RemainingWork</Field>
+		<Value>Remaining Work</Value>
+		</WorkItemFieldMatches>
+		<WorkItemFieldMatches>
+		<Field>CompletedWork</Field>
+		<Value>Completed Work</Value>
 	</WorkItemFieldMatches>
   
 	<!-- An example template definition. DisplayOrder orders the options on the page combo box. -->
