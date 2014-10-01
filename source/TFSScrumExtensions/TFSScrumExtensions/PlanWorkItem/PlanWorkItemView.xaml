@@ -1,0 +1,302 @@
+﻿<UserControl x:Class="JosePedroSilva.TFSScrumExtensions.PlanWorkItem.PlanWorkItemView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:framework="clr-namespace:Microsoft.TeamFoundation.Controls.WPF.TeamExplorer.Framework;assembly=Microsoft.TeamFoundation.Controls"
+             xmlns:local="clr-namespace:JosePedroSilva.TFSScrumExtensions.PlanWorkItem"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:utils="clr-namespace:JosePedroSilva.TFSScrumExtensions.Utils"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300" DataContextChanged="UserControl_DataContextChanged">
+
+    <Grid Margin="10,10,0,0" 
+          HorizontalAlignment="Stretch"
+          VerticalAlignment="Stretch"
+          >
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" HorizontalAlignment="Stretch" Margin="0,0,0,10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0" Grid.Row="0">
+                <Hyperlink x:Name="HyperlinkEditConfiguration" Click="HyperlinkEditConfiguration_Click">Edit Config</Hyperlink>
+            </TextBlock>
+            <TextBlock Grid.Column="1" Margin="3,0" Text="|" />
+            <TextBlock Grid.Column="2" Grid.Row="0">
+                <Hyperlink x:Name="HyperlinkReloadConfiguration" Click="HyperlinkReloadConfiguration_Click">Reload Config</Hyperlink>
+            </TextBlock>
+        </Grid>
+
+        <Grid HorizontalAlignment="Stretch" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0">
+                <Run Text="Planning Template" />
+                <Run Text=":" />
+            </TextBlock>
+
+            <ComboBox Grid.Column="1" Margin="15, 0, 0, 0" HorizontalAlignment="Stretch"
+                      ItemsSource="{Binding PlanningTemplates}"
+                      SelectedItem="{Binding SelectedPlanningTemplate}"
+                      DisplayMemberPath="DisplayName" />
+        </Grid>
+        
+        <ListView Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,7,0,0" ItemsSource="{Binding SelectedPlanningTemplate.TasksToCreateCollection}" BorderThickness="0">
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                </Style>
+            </ListBox.ItemContainerStyle>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid HorizontalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        
+                        <StackPanel Grid.Row="0" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,0,8,0">
+                            <TextBox TextAlignment="Center" x:Name="txtBoxQuantity" Text="{Binding Quantity}" MinWidth="20">
+                                <i:Interaction.Behaviors>
+                                    <utils:TextBoxEnterKeyUpdateBehavior />
+                                </i:Interaction.Behaviors>
+                            </TextBox>
+                        </StackPanel>
+                        
+                        <Grid Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+
+                            <!-- Item Header -->
+                            <TextBlock
+                                x:Name="txtBlockTaskType"
+                                Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"
+                                Text="{Binding Title}"
+                                FontWeight="Bold"
+                                FontSize="14"
+                            />
+
+                            <Expander Grid.Row="1" Header="Users and Time" IsExpanded="True">
+                                <StackPanel Orientation="Vertical">
+                                    <ListView HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{Binding InstancesCollection}" BorderThickness="0" Margin="15,0,0,0">
+                                        <ListBox.ItemContainerStyle>
+                                            <Style TargetType="ListBoxItem">
+                                                <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                                            </Style>
+                                        </ListBox.ItemContainerStyle>
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid HorizontalAlignment="Stretch">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                    </Grid.ColumnDefinitions>
+                                                
+                                                    <ComboBox
+                                                        Grid.Column="0"
+                                                        Margin="0,0,10,0"
+                                                        MinWidth="100"
+                                                        HorizontalAlignment="Stretch"
+                                                        IsEditable="True"
+                                                        ItemsSource="{Binding DataContext.UsersAvailableForAssign, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
+                                                        DisplayMemberPath="DisplayName"
+                                                        SelectedValuePath="DisplayName"
+                                                        SelectedValue="{Binding AssignedTo, Mode=TwoWay}" />
+                                                
+                                                    <!-- Estimated Time -->
+                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="2">
+
+                                                        <TextBox x:Name="txtBoxItemInstanceEstimatedTime" Text="{Binding EstimatedTime}" MinWidth="20" />
+
+                                                        <TextBlock Margin="5,0,0,0" Text="hours" />
+                                                    </StackPanel>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+                                </StackPanel>
+                            </Expander>
+
+                            <Expander Grid.Row="2" Grid.Column="0" IsExpanded="False" Header="Work Item Properties" >
+
+                                <Grid Margin="10,4,0,0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+
+                                    <StackPanel Grid.Row="0" Orientation="Vertical">
+                                        <!-- Work Item Type Field -->
+                                        <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
+                                            <TextBlock x:Name="comboWorkItemTypeLabel">
+                                                <Run Text="Work Item Type" />
+                                                <Run Text=":" />
+                                            </TextBlock>
+
+                                            <ComboBox HorizontalAlignment="Stretch"
+                                                  IsEditable="True"
+                                                  ItemsSource="{Binding DataContext.AvailableWorkItemTypes, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
+                                                  DisplayMemberPath="Name"
+                                                  SelectedValuePath="Name"
+                                                  SelectedValue="{Binding WorkItemType, Mode=TwoWay}" />
+                                        </StackPanel>
+
+                                        <!-- Work Item Link Type Field -->
+                                        <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
+                                            <TextBlock x:Name="comboWorkItemLinkTypeLabel">
+                                                <Run Text="Work Item Link Type" />
+                                                <Run Text=":" />
+                                            </TextBlock>
+
+                                            <ComboBox HorizontalAlignment="Stretch"
+                                                  IsEditable="True"
+                                                  ItemsSource="{Binding DataContext.AvailableWorkItemLinkTypes, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
+                                                  DisplayMemberPath="ReferenceName"
+                                                  SelectedValuePath="ReferenceName"
+                                                  SelectedValue="{Binding WorkItemLinkType, Mode=TwoWay}" />
+                                        </StackPanel>
+
+                                        <!-- Prefix Field -->
+                                        <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
+                                            <TextBlock x:Name="txtBlockItemPrefixLabel">
+                                        <Run Text="Prefix" />
+                                        <Run Text=":" />
+                                            </TextBlock>
+
+                                            <TextBox x:Name="txtBoxItemPrefix" Text="{Binding Prefix}" MinWidth="50" HorizontalAlignment="Stretch" />
+                                        </StackPanel>
+                                        
+                                        <!-- Sufix Field-->
+                                        <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
+                                            <TextBlock x:Name="txtBlockItemSufixLabel">
+                                        <Run Text="Sufix" />
+                                        <Run Text=":" />
+                                            </TextBlock>
+
+                                            <TextBox x:Name="txtBoxItemSufix" Text="{Binding Sufix}" MinWidth="50" HorizontalAlignment="Stretch" />
+                                        </StackPanel>
+
+                                        <!-- Boolean Fields -->
+                                        <Grid Margin="0,5,0,0">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
+                                            
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            
+                                            <TextBlock>
+                                                <Run Text="Others" />
+                                                <Run Text=":" />
+                                            </TextBlock>
+                                            
+                                            <CheckBox Grid.Row="1" Grid.Column="0" Margin="0,2,0,0" Content="Copy Description" IsChecked="{Binding IsCopyDescriptionEnabled, Mode=TwoWay}" Background="Transparent" />
+                                        </Grid>
+                                    </StackPanel>
+
+                                    <StackPanel Margin="0,10,0,0" Grid.Row="1">
+                                        <TextBlock>
+                                            <Run Text="Custom" />
+                                            <Run Text=":" />
+                                        </TextBlock>
+                                        <DataGrid x:Name="dataGridCustomProperties" ItemsSource="{Binding CustomProperties}" CanUserAddRows="True" AutoGenerateColumns="False">
+                                            <DataGrid.Columns>
+                                                <DataGridTextColumn Header="Name" Binding="{Binding Name}" IsReadOnly="False" />
+                                                <DataGridTextColumn Header="Value" Binding="{Binding Value}" IsReadOnly="False" />
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                    </StackPanel>
+                                    
+                                </Grid>
+                            </Expander>
+                        </Grid>
+                        
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <Grid Grid.Row="3" HorizontalAlignment="Stretch" Margin="0,15,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            
+            <Button x:Name="buttonCreateWorkItems" Grid.Row="0" Grid.Column="1" Click="buttonCreateWorkItems_Click">
+                <Button.Content>
+                    <TextBlock Text="Create Work Item(s)"></TextBlock>
+                </Button.Content>
+            </Button>
+        </Grid>
+
+        <Grid Grid.Row="4" HorizontalAlignment="Stretch" Margin="0,20,0,0" Visibility="{Binding CreatedWorkItemsVisibility}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            
+            <TextBlock Grid.Row="0" FontWeight="Bold">
+                <Run Text="Last Created Work Items" />
+                <Run Text=":" />
+            </TextBlock>
+
+            <ListView Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{Binding CreatedWorkItems}">
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding CreatedDate}" />
+                            <TextBlock Margin="3,0" Text="|" />
+                            <TextBlock>
+                                <Hyperlink x:Name="HyperlinkGoToWorkItem" Click="HyperlinkGoToWorkItem_Click" Tag="{Binding}">
+                                    <Run Text="{Binding Id, Mode=OneWay}" />
+                                </Hyperlink>
+                            </TextBlock>
+                            <TextBlock Margin="3,0" Text="|" />
+                            <TextBlock Text="{Binding Title}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+    </Grid>
+</UserControl>

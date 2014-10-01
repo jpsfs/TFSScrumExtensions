@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFSScrumExtensions", "TFSScrumExtensions\TFSScrumExtensions.csproj", "{58559E46-B771-4732-AC43-58E57A34DCEF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFSScrumExtensions_IntegrationTests", "TFSScrumExtensions\TFSScrumExtensions_IntegrationTests\TFSScrumExtensions_IntegrationTests.csproj", "{C19DD5D8-97A7-4767-934B-9ECCDD306EE5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A6646770-30CA-4FA8-A6F9-8AEAD9F2D635}"
+	ProjectSection(SolutionItems) = preProject
+		IntegrationTests.testsettings = IntegrationTests.testsettings
+		UnitTests.testsettings = UnitTests.testsettings
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFSScrumExtensions_UnitTests", "TFSScrumExtensions\TFSScrumExtensions_UnitTests\TFSScrumExtensions_UnitTests.csproj", "{87B91F81-3496-4E55-B8D7-7D92853A5E35}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFSScrumExtensionsLib", "TFSScrumExtensionsLib\TFSScrumExtensionsLib.csproj", "{B1044821-326E-455A-A5EC-6B9367EB5599}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{58559E46-B771-4732-AC43-58E57A34DCEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58559E46-B771-4732-AC43-58E57A34DCEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58559E46-B771-4732-AC43-58E57A34DCEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58559E46-B771-4732-AC43-58E57A34DCEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C19DD5D8-97A7-4767-934B-9ECCDD306EE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C19DD5D8-97A7-4767-934B-9ECCDD306EE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C19DD5D8-97A7-4767-934B-9ECCDD306EE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C19DD5D8-97A7-4767-934B-9ECCDD306EE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87B91F81-3496-4E55-B8D7-7D92853A5E35}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87B91F81-3496-4E55-B8D7-7D92853A5E35}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87B91F81-3496-4E55-B8D7-7D92853A5E35}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87B91F81-3496-4E55-B8D7-7D92853A5E35}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1044821-326E-455A-A5EC-6B9367EB5599}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1044821-326E-455A-A5EC-6B9367EB5599}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1044821-326E-455A-A5EC-6B9367EB5599}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1044821-326E-455A-A5EC-6B9367EB5599}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
