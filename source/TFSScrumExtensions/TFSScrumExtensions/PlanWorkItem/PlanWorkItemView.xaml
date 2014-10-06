@@ -5,11 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:framework="clr-namespace:Microsoft.TeamFoundation.Controls.WPF.TeamExplorer.Framework;assembly=Microsoft.TeamFoundation.Controls"
              xmlns:local="clr-namespace:JosePedroSilva.TFSScrumExtensions.PlanWorkItem"
-             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-             xmlns:utils="clr-namespace:JosePedroSilva.TFSScrumExtensions.Utils"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300" DataContextChanged="UserControl_DataContextChanged">
 
+    <!--xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"-->
     <Grid Margin="10,10,0,0" 
           HorizontalAlignment="Stretch"
           VerticalAlignment="Stretch"
@@ -79,9 +78,9 @@
                         
                         <StackPanel Grid.Row="0" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,0,8,0">
                             <TextBox TextAlignment="Center" x:Name="txtBoxQuantity" Text="{Binding Quantity}" MinWidth="20">
-                                <i:Interaction.Behaviors>
+                                <!--<i:Interaction.Behaviors>
                                     <utils:TextBoxEnterKeyUpdateBehavior />
-                                </i:Interaction.Behaviors>
+                                </i:Interaction.Behaviors> -->
                             </TextBox>
                         </StackPanel>
                         
