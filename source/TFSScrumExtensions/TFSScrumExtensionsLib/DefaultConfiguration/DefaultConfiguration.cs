@@ -16,7 +16,8 @@ namespace JosePedroSilva.TFSScrumExtensions.DefaultConfiguration
         {
             UserGroups = new List<String>()
             {
-                "Contributors"
+                "Contributors",
+                "Project Administrators"
             },
             WorkItemFieldMatches = new List<WorkItemFieldMatch>()
             {

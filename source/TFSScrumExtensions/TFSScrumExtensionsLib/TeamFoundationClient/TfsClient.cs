@@ -80,7 +80,7 @@ namespace JosePedroSilva.TFSScrumExtensions.TeamFoundationClient
 
             // get the tfs project
             var projectList = css.ListAllProjects();
-            var project = projectList.FirstOrDefault(o => o.Name.Contains(this.TfsServer.ActiveProjectContext.ProjectName));
+            var project = projectList.FirstOrDefault(o => o.Name.Equals(this.TfsServer.ActiveProjectContext.ProjectName, StringComparison.InvariantCultureIgnoreCase));
 
             // project doesn't exist
             if (project == null) return null;
@@ -162,10 +162,7 @@ namespace JosePedroSilva.TFSScrumExtensions.TeamFoundationClient
         public WorkItem[] CreateRelatedWorkItems(int[] baseWorkItemIds, PlanningTemplate selectedPlanningTemplate)
         {
             TfsTeamProjectCollection projectCollection = this.GetTeamProjectCollection();
-
             WorkItemStore store = projectCollection.GetService<WorkItemStore>();
-
-            Project project = store.Projects[this.TfsServer.ActiveProjectContext.ProjectName];
 
             Dictionary<WorkItemField, String> workItemFieldMatches = new Dictionary<WorkItemField, string>(ConfigurationManager.CurrentConfiguration.WorkItemFieldMatches.Count);
 
@@ -180,6 +177,7 @@ namespace JosePedroSilva.TFSScrumExtensions.TeamFoundationClient
             foreach (int workItemId in baseWorkItemIds)
             {
                 WorkItem baseWorkItem = store.GetWorkItem(workItemId);
+                Project project = baseWorkItem.Project;
 
                 foreach (TaskTemplate taskTemplate in selectedPlanningTemplate.TasksToCreateCollection)
                 {
@@ -219,6 +217,8 @@ namespace JosePedroSilva.TFSScrumExtensions.TeamFoundationClient
                     {
                         WorkItem newWorkItem = wiType.NewWorkItem();
 
+                        newWorkItem.AreaId = baseWorkItem.AreaId;
+                        newWorkItem.AreaPath = baseWorkItem.AreaPath;
                         newWorkItem.IterationPath = baseWorkItem.IterationPath;
                         newWorkItem.Title = String.Format("{0}{1}{2}", taskTemplate.Prefix, baseWorkItem.Title, taskTemplate.Sufix);
 
