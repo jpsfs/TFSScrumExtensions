@@ -1,0 +1,9 @@
+==================================================================
+=
+=          TFS Scrum Extensions
+=
+==================================================================
+
+Release 0.0.4:
+- Support to multiple project work items;
+- Multiple bug fixes;
