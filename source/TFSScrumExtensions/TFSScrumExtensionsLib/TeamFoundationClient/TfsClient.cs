@@ -220,6 +220,13 @@ namespace JosePedroSilva.TFSScrumExtensions.TeamFoundationClient
                         newWorkItem.AreaId = baseWorkItem.AreaId;
                         newWorkItem.AreaPath = baseWorkItem.AreaPath;
                         newWorkItem.IterationPath = baseWorkItem.IterationPath;
+
+                        // Copy Tags
+                        if (!String.IsNullOrWhiteSpace(baseWorkItem.Tags))
+                        {
+                            newWorkItem["Tags"] = baseWorkItem.Tags;
+                        }
+
                         newWorkItem.Title = String.Format("{0}{1}{2}", taskTemplate.Prefix, baseWorkItem.Title, taskTemplate.Sufix);
 
                         // AssignedTo
