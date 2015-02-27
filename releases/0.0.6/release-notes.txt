@@ -1,0 +1,16 @@
+==================================================================
+=
+=          TFS Scrum Extensions
+=
+==================================================================
+
+Release 0.0.6:
+- Support for Visual Studio Online;
+- Team Explorer Home ShortCut for Work Item Planning.
+
+Release 0.0.5:
+- Copy tags on Work Items (VS2013);
+
+Release 0.0.4:
+- Support to multiple project work items;
+- Multiple bug fixes;

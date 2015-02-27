@@ -223,7 +223,10 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <None Include="Resources\PlanWorkItemNavigationItem.png" />
+    <Content Include="Resources\PlanWorkItemNavigationItem.png">
+      <IncludeInVSIX>true</IncludeInVSIX>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Page Include="PlanWorkItem\PlanWorkItemView.xaml">
