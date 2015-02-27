@@ -8,6 +8,7 @@
 using JosePedroSilva.TFSScrumExtensions.BusinessObjects;
 using JosePedroSilva.TFSScrumExtensions.Configuration;
 using JosePedroSilva.TFSScrumExtensions.TeamFoundationClient;
+using Microsoft.TeamFoundation.Controls;
 using Microsoft.TeamFoundation.WorkItemTracking.Client;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.TeamFoundation.WorkItemTracking;
@@ -69,6 +70,50 @@ namespace JosePedroSilva.TFSScrumExtensions.PlanWorkItem
         #endregion
 
         #region Private & Internal Methods
+
+        private async void LoadWorkItems()
+        {
+            if(this.PageModel.AreWorkItemsSelected)
+            {
+                PlanWorkItemPageModel pgModel = this.PageModel;
+                pgModel.IsBusy = true;
+                // Load WorkItems
+                await System.Threading.Tasks.Task.Run(() =>
+                {
+                    var workItems = pgModel.TfsClient.GetWorkItems(pgModel.WorkItemIds);
+
+                    String aggregatedTitle = null;
+                    String aggregatedIterationPath = null;
+                    for (int i = 0; i < workItems.Length; i++)
+                    {
+                        if (aggregatedTitle == null)
+                        {
+                            aggregatedTitle = workItems[i].Title;
+                        }
+                        else if (aggregatedTitle != workItems[i].Title)
+                        {
+                            aggregatedTitle = "(multiple work items selected)";
+                        }
+
+                        if (aggregatedIterationPath == null)
+                        {
+                            aggregatedIterationPath = workItems[i].IterationPath;
+                        }
+                        else if (aggregatedIterationPath != workItems[i].IterationPath)
+                        {
+                            aggregatedIterationPath = "(multiple work items selected)";
+                        }
+                    }
+
+                    pgModel.AggregatedWorkItemTitle = aggregatedTitle;
+                    pgModel.AggregatedWorkItemIterationPath = aggregatedIterationPath;
+
+                });
+
+                pgModel.AreWorkItemsSelected = true;
+                pgModel.IsBusy = false;
+            }
+        }
 
         /// <summary>
         /// Builds the planning templates.
@@ -209,6 +254,14 @@ namespace JosePedroSilva.TFSScrumExtensions.PlanWorkItem
         private void UserControl_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             this.BuildPlanningTemplates(this.PageModel, ConfigurationManager.CurrentConfiguration);
+            this.LoadWorkItems();
+        }
+
+        private void buttonSelectWorkItems_Click(object sender, RoutedEventArgs e)
+        {
+            this.PageModel.AreWorkItemsSelected = true;
+
+            this.LoadWorkItems();
         }
 
         #endregion

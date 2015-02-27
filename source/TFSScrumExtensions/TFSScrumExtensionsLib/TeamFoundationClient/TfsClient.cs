@@ -2,6 +2,8 @@
 using JosePedroSilva.TFSScrumExtensions.Configuration;
 using JosePedroSilva.TFSScrumExtensions.Extensions;
 using Microsoft.TeamFoundation.Client;
+using Microsoft.TeamFoundation.Framework.Client;
+using Microsoft.TeamFoundation.Framework.Common;
 using Microsoft.TeamFoundation.Server;
 using Microsoft.TeamFoundation.WorkItemTracking.Client;
 using Microsoft.VisualStudio.TeamFoundation;
@@ -72,11 +74,12 @@ namespace JosePedroSilva.TFSScrumExtensions.TeamFoundationClient
         /// Gets the users.
         /// </summary>
         /// <returns></returns>
-        public List<Identity> GetUsers()
+        public List<TeamFoundationIdentity> GetUsers()
         {
             TfsTeamProjectCollection projectCollection = this.GetTeamProjectCollection();
             ICommonStructureService css = (ICommonStructureService)projectCollection.GetService(typeof(ICommonStructureService));
             IGroupSecurityService gss = projectCollection.GetService<IGroupSecurityService>();
+            IIdentityManagementService ims = projectCollection.GetService<IIdentityManagementService>(); 
 
             // get the tfs project
             var projectList = css.ListAllProjects();
@@ -98,7 +101,7 @@ namespace JosePedroSilva.TFSScrumExtensions.TeamFoundationClient
                 groups = groupList.ToList();
             }
 
-            List<Identity> contributors = new List<Identity>();
+            List<TeamFoundationIdentity> contributors = new List<TeamFoundationIdentity>();
             foreach (Identity group in groups)
             {
                 Identity sids = gss.ReadIdentity(SearchFactor.Sid, group.Sid, QueryMembership.Expanded);
@@ -107,10 +110,10 @@ namespace JosePedroSilva.TFSScrumExtensions.TeamFoundationClient
                 if (sids.Members.Length == 0) continue;
 
                 // convert to a list
-                contributors.AddRange(gss.ReadIdentities(SearchFactor.Sid, sids.Members, QueryMembership.Direct).Where(x => x.Type != IdentityType.WindowsGroup && x.Type != IdentityType.ApplicationGroup).ToList());
+                contributors.AddRange(ims.ReadIdentities(IdentitySearchFactor.Identifier, sids.Members, MembershipQuery.Direct, ReadIdentityOptions.None).SelectMany(x => x).Where(x => x.IsContainer == false));
             }
 
-            return contributors.Distinct().OrderBy(x => x.DisplayName).ToList();
+            return contributors.GroupBy(x => x.DisplayName).Select(g => g.First()).OrderBy(x => x.DisplayName).ToList();
         }
 
         /// <summary>
@@ -250,6 +253,15 @@ namespace JosePedroSilva.TFSScrumExtensions.TeamFoundationClient
                         if (taskTemplate.IsCopyDescriptionEnabled)
                         {
                             newWorkItem.Description = baseWorkItem.Description;
+
+                            if (String.IsNullOrWhiteSpace(newWorkItem.Description))
+                            {
+                                // Maybe this is a bug
+                                if (baseWorkItem.Fields.Contains("Repro Steps"))
+                                {
+                                    newWorkItem.Description = baseWorkItem.Fields["Repro Steps"].Value.ToString();
+                                }
+                            }
                         }
 
                         newWorkItem.Links.Add(new RelatedLink(relationLinkType, baseWorkItem.Id));
@@ -265,6 +277,36 @@ namespace JosePedroSilva.TFSScrumExtensions.TeamFoundationClient
 
             return witems;
 
+        }
+
+        /// <summary>
+        /// Gets the work items.
+        /// </summary>
+        /// <param name="workItemIds">The work item ids.</param>
+        /// <returns>
+        /// WorkItems
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">If the work item doesn't exist.</exception>
+        public WorkItem[] GetWorkItems(int[] workItemIds)
+        {
+            TfsTeamProjectCollection projectCollection = this.GetTeamProjectCollection();
+            WorkItemStore store = projectCollection.GetService<WorkItemStore>();
+
+            WorkItem[] workItems = new WorkItem[workItemIds.Length];
+            
+            for(int i = 0; i < workItemIds.Length; i++)
+            {
+                WorkItem workItem = store.GetWorkItem(workItemIds[i]);
+
+                if(workItem == null)
+                {
+                    throw new ArgumentNullException("WorkItem");
+                }
+
+                workItems[i] = workItem;
+            }
+
+            return workItems;
         }
 
         #endregion

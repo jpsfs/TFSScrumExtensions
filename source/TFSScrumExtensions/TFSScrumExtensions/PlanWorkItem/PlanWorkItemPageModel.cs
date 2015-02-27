@@ -1,5 +1,6 @@
 ﻿using JosePedroSilva.TFSScrumExtensions.BusinessObjects;
 using JosePedroSilva.TFSScrumExtensions.TeamFoundationClient;
+using Microsoft.TeamFoundation.Framework.Client;
 using Microsoft.TeamFoundation.Server;
 using Microsoft.TeamFoundation.WorkItemTracking.Client;
 using System;
@@ -17,7 +18,8 @@ namespace JosePedroSilva.TFSScrumExtensions.PlanWorkItem
         #region Private Variables
 
         private Int32[] workItemIds;
-        private List<Identity> _usersAvailableForAssign;
+        private WorkItem[] _workItems;
+        private List<TeamFoundationIdentity> _usersAvailableForAssign;
         private WorkItemTypeCollection _availableWorkItemTypes;
         private WorkItemLinkTypeCollection _availableWorkItemLinkTypes;
 
@@ -32,6 +34,10 @@ namespace JosePedroSilva.TFSScrumExtensions.PlanWorkItem
         /// </summary>
         private Boolean _isBusy;
         private ObservableCollection<PlanningTemplate> _planningTemplates;
+
+        private Boolean _areWorkItemsSelected;
+        private String _aggregatedWorkItemTitle = "(no information available at this moment)";
+        private String _aggregatedWorkItemIterationPath = "(no information available at this moment)";
 
         #endregion
 
@@ -133,7 +139,7 @@ namespace JosePedroSilva.TFSScrumExtensions.PlanWorkItem
         /// <value>
         /// The users available for assign.
         /// </value>
-        public List<Identity> UsersAvailableForAssign
+        public List<TeamFoundationIdentity> UsersAvailableForAssign
         {
             get
             {
@@ -262,6 +268,80 @@ namespace JosePedroSilva.TFSScrumExtensions.PlanWorkItem
                     this._createdWorkItemsVisibility = value;
                     this.OnPropertyChanged("CreatedWorkItemsVisibility");
                 }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether [allow work item declaration].
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if [allow work item declaration]; otherwise, <c>false</c>.
+        /// </value>
+        public Boolean AreWorkItemsSelected
+        {
+            get
+            {
+                return this._areWorkItemsSelected;
+            }
+            set
+            {
+                if(this._areWorkItemsSelected != value)
+                {
+                    this._areWorkItemsSelected = value;
+                    this.OnPropertyChanged("AreWorkItemsSelected");
+                }
+            }
+        }
+
+        public String AggregatedWorkItemTitle
+        {
+            get
+            {
+                return this._aggregatedWorkItemTitle;
+            }
+            set
+            {
+                if (this._aggregatedWorkItemTitle != value)
+                {
+                    this._aggregatedWorkItemTitle = value;
+                    this.OnPropertyChanged("AggregatedWorkItemTitle");
+                }
+            }
+        }
+
+        public String AggregatedWorkItemIterationPath
+        {
+            get
+            {
+                return this._aggregatedWorkItemIterationPath;
+            }
+            set
+            {
+                if (this._aggregatedWorkItemIterationPath != value)
+                {
+                    this._aggregatedWorkItemIterationPath = value;
+                    this.OnPropertyChanged("AggregatedWorkItemIterationPath");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the work items.
+        /// </summary>
+        /// <value>
+        /// The work items.
+        /// </value>
+        public WorkItem[] WorkItems
+        {
+            get
+            {
+                return this._workItems;
+            }
+
+            set
+            {
+                this._workItems = value;
+                this.OnPropertyChanged("WorkItems");
             }
         }
 

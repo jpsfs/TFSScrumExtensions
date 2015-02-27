@@ -92,6 +92,23 @@ namespace JosePedroSilva.TFSScrumExtensions.PlanWorkItem
                 return;
             }
 
+            this.OnPlanWorkItem(selectedItemIds);
+
+        }
+
+        /// <summary>
+        /// Called when [plan work item].
+        /// </summary>
+        /// <param name="workItemIds">The work item ids.</param>
+        public void OnPlanWorkItem(int[] workItemIds, bool areWorkItemsSelected = true)
+        {
+            var dteService = Package.GetGlobalService(typeof(EnvDTE.DTE)) as EnvDTE.DTE;
+            if (dteService == null)
+            {
+                Debug.WriteLine("[PlanWorkItemController] DTE Service is null.");
+                return;
+            }
+
             var teamExplorer = (ITeamExplorer)(Package.GetGlobalService(typeof(ITeamExplorer)));
 
             teamFoundationServerExt = (dteService.GetObject("Microsoft.VisualStudio.TeamFoundation.TeamFoundationServerExt") as TeamFoundationServerExt);
@@ -100,12 +117,13 @@ namespace JosePedroSilva.TFSScrumExtensions.PlanWorkItem
 
             teamExplorer.NavigateToPage(new Guid(PlanWorkItemPage.PageId), new PlanWorkItemPageModel()
             {
-                WorkItemIds = selectedItemIds,
+                WorkItemIds = workItemIds,
                 UsersAvailableForAssign = tfsClient.GetUsers(),
                 ConfigurationFilePath = TFSScrumExtensionsPackage.ConfigurationFilePath,
                 AvailableWorkItemTypes = tfsClient.GetWorkItemsTypes(),
                 AvailableWorkItemLinkTypes = tfsClient.GetWorkItemLinkTypes(),
-                TfsClient = tfsClient
+                TfsClient = tfsClient,
+                AreWorkItemsSelected = areWorkItemsSelected
             });
         }
 

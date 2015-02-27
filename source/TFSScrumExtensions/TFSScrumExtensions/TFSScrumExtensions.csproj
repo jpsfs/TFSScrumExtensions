@@ -150,8 +150,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BasePageModel.cs" />
+    <Compile Include="Base\TeamExplorerBase.cs" />
+    <Compile Include="Base\TeamExplorerBaseNavigationItem.cs" />
+    <Compile Include="Base\TeamExplorerBaseNavigationLink.cs" />
+    <Compile Include="Base\TeamExplorerBasePage.cs" />
+    <Compile Include="Base\TeamExplorerBaseSection.cs" />
+    <Compile Include="Converters\ArrayToBool.cs" />
+    <Compile Include="Converters\ArrayToString.cs" />
+    <Compile Include="Converters\NegativeBoolConverter.cs" />
     <Compile Include="Guids.cs" />
     <Compile Include="PlanWorkItem\PlanWorkItemController.cs" />
+    <Compile Include="PlanWorkItem\PlanWorkItemNavigationItem.cs" />
+    <Compile Include="PlanWorkItem\PlanWorkItemNavigationLink.cs" />
     <Compile Include="PlanWorkItem\PlanWorkItemPage.cs" />
     <Compile Include="PlanWorkItem\PlanWorkItemPageModel.cs" />
     <Compile Include="PlanWorkItem\PlanWorkItemView.xaml.cs">
@@ -213,6 +223,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
+    <None Include="Resources\PlanWorkItemNavigationItem.png" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="PlanWorkItem\PlanWorkItemView.xaml">

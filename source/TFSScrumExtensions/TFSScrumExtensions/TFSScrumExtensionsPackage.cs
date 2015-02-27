@@ -48,6 +48,8 @@ namespace JosePedroSilva.TFSScrumExtensions
 
         #region Public Variables
 
+        public static bool IsAddinInitialized = false;
+
         #endregion
 
         #region Properties
@@ -116,6 +118,28 @@ namespace JosePedroSilva.TFSScrumExtensions
             ConfigurationManager.CurrentConfiguration = ConfigurationManager.Load(path);
         }
 
+        /// <summary>
+        /// Internals the initialize.
+        /// </summary>
+        public static void InternalInitialize()
+        {
+            Debug.WriteLine("Loading Configuration");
+
+            if (!IsAddinInitialized)
+            {
+
+                string configFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"TFSScrumExtensions\DefaultConfiguration.xml");
+                if (!File.Exists(configFilePath))
+                {
+                    ConfigurationManager.Save(DefaultConfiguration.DefaultConfigurations.Default, configFilePath);
+                }
+
+                ConfigurationManager.CurrentConfiguration = ConfigurationManager.Load(configFilePath);
+
+                IsAddinInitialized = true;
+            }
+        }
+
         #endregion
 
         #region Event handling Methods
@@ -148,15 +172,7 @@ namespace JosePedroSilva.TFSScrumExtensions
             Debug.WriteLine (string.Format(CultureInfo.CurrentCulture, "Entering Initialize() of: {0}", this.ToString()));
             base.Initialize();
 
-            Debug.WriteLine("Loading Configuration");
-
-            string configFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"TFSScrumExtensions\DefaultConfiguration.xml");
-            if (!File.Exists(configFilePath))
-            {
-                ConfigurationManager.Save(DefaultConfiguration.DefaultConfigurations.Default, configFilePath);
-            }
-
-            ConfigurationManager.CurrentConfiguration = ConfigurationManager.Load(configFilePath);
+            InternalInitialize();
 
             #region PlanWorkItemController
 

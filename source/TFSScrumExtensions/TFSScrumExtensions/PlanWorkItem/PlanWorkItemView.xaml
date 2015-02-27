@@ -5,9 +5,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:framework="clr-namespace:Microsoft.TeamFoundation.Controls.WPF.TeamExplorer.Framework;assembly=Microsoft.TeamFoundation.Controls"
              xmlns:local="clr-namespace:JosePedroSilva.TFSScrumExtensions.PlanWorkItem"
+             xmlns:converters="clr-namespace:JosePedroSilva.TFSScrumExtensions.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300" DataContextChanged="UserControl_DataContextChanged">
 
+    <UserControl.Resources>
+        <converters:ArrayToString x:Key="ArrayToString" />
+        <converters:ArrayToBool x:Key="ArrayToBool" />
+        <converters:NegativeBoolConverter x:Key="NegativeBoolConverter" />
+    </UserControl.Resources>
     <!--xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"-->
     <Grid Margin="10,10,0,0" 
           HorizontalAlignment="Stretch"
@@ -15,6 +21,7 @@
           >
         
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -42,7 +49,7 @@
             </TextBlock>
         </Grid>
 
-        <Grid HorizontalAlignment="Stretch" Grid.Row="1">
+        <Grid HorizontalAlignment="Stretch" Grid.Row="1" Margin="0,0,0,10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
@@ -58,7 +65,44 @@
                       DisplayMemberPath="DisplayName" />
         </Grid>
         
-        <ListView Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,7,0,0" ItemsSource="{Binding SelectedPlanningTemplate.TasksToCreateCollection}" BorderThickness="0">
+        <Grid HorizontalAlignment="Stretch" Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            
+            <Grid HorizontalAlignment="Stretch" Grid.Row="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" Text="Work Item Id(s):" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,0,15,0" />
+                <TextBox Grid.Column="1" Text="{Binding WorkItemIds, Mode=TwoWay, Converter={StaticResource ArrayToString}}" VerticalContentAlignment="Center" Margin="0,0,5,0" IsEnabled="{Binding AreWorkItemsSelected, Converter={StaticResource NegativeBoolConverter}}" />
+                <Button Grid.Column="2" x:Name="buttonSelectWorkItems" Content="Select WorkItem(s)" IsEnabled="{Binding AreWorkItemsSelected, Converter={StaticResource NegativeBoolConverter}}" Click="buttonSelectWorkItems_Click" />
+            </Grid>
+
+            <GroupBox Header="Work Item(s) Information:" Grid.Row="1" Margin="0,15,0,0" HorizontalAlignment="Stretch">
+                <Grid HorizontalAlignment="Stretch" >
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Title:" Margin="0,0,5,0" VerticalAlignment="Center" FontStyle="Italic" />
+                            <TextBlock Text="{Binding AggregatedWorkItemTitle}" VerticalAlignment="Center" IsEnabled="False" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Iteration Path:" Margin="0,5,5,0" VerticalAlignment="Center" FontStyle="Italic"/>
+                            <TextBlock Text="{Binding AggregatedWorkItemIterationPath}" VerticalAlignment="Center" IsEnabled="False" />
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </GroupBox>
+        </Grid>
+
+        <ListView Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,7,0,0" ItemsSource="{Binding SelectedPlanningTemplate.TasksToCreateCollection}" BorderThickness="0" IsEnabled="{Binding AreWorkItemsSelected}">
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
@@ -247,7 +291,7 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <Grid Grid.Row="3" HorizontalAlignment="Stretch" Margin="0,15,0,0">
+        <Grid Grid.Row="4" HorizontalAlignment="Stretch" Margin="0,15,0,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
@@ -263,7 +307,7 @@
             </Button>
         </Grid>
 
-        <Grid Grid.Row="4" HorizontalAlignment="Stretch" Margin="0,20,0,0" Visibility="{Binding CreatedWorkItemsVisibility}">
+        <Grid Grid.Row="5" HorizontalAlignment="Stretch" Margin="0,20,0,0" Visibility="{Binding CreatedWorkItemsVisibility}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />

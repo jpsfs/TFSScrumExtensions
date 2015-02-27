@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="59e02031-1f61-4fba-9c44-b40543411b8d" Version="0.0.5" Language="en-US" Publisher="JosePedroSilva" />
+    <Identity Id="59e02031-1f61-4fba-9c44-b40543411b8d" Version="0.0.6" Language="en-US" Publisher="JosePedroSilva" />
     <DisplayName>TFSScrumExtensions</DisplayName>
     <Description xml:space="preserve">TFS Scrum Extensions is a Visual Studio Extension designed to help Project Managers and Developers to easily plan and estimate multiple tasks.</Description>
     <MoreInfo>https://github.com/jpsfs/TFSScrumExtensions</MoreInfo>
