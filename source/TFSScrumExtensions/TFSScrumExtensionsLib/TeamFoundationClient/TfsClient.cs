@@ -151,6 +151,15 @@ namespace JosePedroSilva.TFSScrumExtensions.TeamFoundationClient
         }
 
         /// <summary>
+        /// Determines whether [is team project connnected].
+        /// </summary>
+        /// <returns></returns>
+        public bool IsTeamProjectConnnected()
+        {
+            return this.TfsServer.ActiveProjectContext.DomainUri != null;
+        }
+
+        /// <summary>
         /// Creates the work items.
         /// </summary>
         /// <param name="baseWorkItemIds">The base work item ids.</param>

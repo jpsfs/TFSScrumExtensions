@@ -35,8 +35,12 @@ namespace JosePedroSilva.TFSScrumExtensions.PlanWorkItem
         public PlanWorkItemNavigationItem([Import(typeof(SVsServiceProvider))]IServiceProvider serviceProvider) : base(serviceProvider)
         {
             this.Text = TFSScrumExtensions.Resources.PlanWorkItem_TeamExplorer_Home;
-            this.IsVisible = true;
             this.Image = TFSScrumExtensions.Resources.PlanWorkItemNavigationItem;
+
+            PlanWorkItemController controller = new PlanWorkItemController();
+            controller.TeamFoundationProjectChanged += controller_TeamFoundationProjectChanged;
+
+            this.IsVisible = controller.IsConnected();
         }
 
         #endregion
@@ -67,6 +71,13 @@ namespace JosePedroSilva.TFSScrumExtensions.PlanWorkItem
         #endregion
 
         #region Event handling Methods
+
+        private void controller_TeamFoundationProjectChanged(object sender, EventArgs e)
+        {
+            PlanWorkItemController controller = new PlanWorkItemController();
+            this.IsVisible = controller.IsConnected();
+        }
+
         #endregion
     }
 }

@@ -30,6 +30,9 @@ namespace JosePedroSilva.TFSScrumExtensions.PlanWorkItem
         #endregion
 
         #region Public Variables
+
+        public event EventHandler TeamFoundationProjectChanged;
+
         #endregion
 
         #region Properties
@@ -42,7 +45,25 @@ namespace JosePedroSilva.TFSScrumExtensions.PlanWorkItem
         /// </summary>
         public PlanWorkItemController()
         {
+            var dteService = Package.GetGlobalService(typeof(EnvDTE.DTE)) as EnvDTE.DTE;
+            if (dteService == null)
+            {
+                Debug.WriteLine("[PlanWorkItemController] DTE Service is null.");
+                return;
+            }
 
+            var teamExplorer = (ITeamExplorer)(Package.GetGlobalService(typeof(ITeamExplorer)));
+
+            teamFoundationServerExt = (dteService.GetObject("Microsoft.VisualStudio.TeamFoundation.TeamFoundationServerExt") as TeamFoundationServerExt);
+            teamFoundationServerExt.ProjectContextChanged +=teamFoundationServerExt_ProjectContextChanged;
+        }
+
+        private void teamFoundationServerExt_ProjectContextChanged(object sender, EventArgs e)
+        {
+            if(this.TeamFoundationProjectChanged != null)
+            {
+                this.TeamFoundationProjectChanged(this, e);
+            }
         }
 
         #endregion
@@ -126,6 +147,29 @@ namespace JosePedroSilva.TFSScrumExtensions.PlanWorkItem
                 AreWorkItemsSelected = areWorkItemsSelected
             });
         }
+
+        /// <summary>
+        /// Determines whether this instance is connected.
+        /// </summary>
+        /// <returns></returns>
+        public bool IsConnected()
+        {
+            var dteService = Package.GetGlobalService(typeof(EnvDTE.DTE)) as EnvDTE.DTE;
+            if (dteService == null)
+            {
+                Debug.WriteLine("[PlanWorkItemController] DTE Service is null.");
+                return false;
+            }
+
+            var teamExplorer = (ITeamExplorer)(Package.GetGlobalService(typeof(ITeamExplorer)));
+
+            teamFoundationServerExt = (dteService.GetObject("Microsoft.VisualStudio.TeamFoundation.TeamFoundationServerExt") as TeamFoundationServerExt);
+            TfsClient tfsClient = new TfsClient(teamFoundationServerExt);
+
+            return tfsClient.IsTeamProjectConnnected();
+        }
+
+
 
         #endregion
 
