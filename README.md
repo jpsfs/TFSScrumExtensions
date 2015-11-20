@@ -1,7 +1,7 @@
 TFSScrumExtensions
 =======================
 
-TFS Scrum Extensions is a VS 2012 and 2013 Extension that helps Project Managers and Developers to easily plan an estimate tasks on Team Foundation Server.
+TFS Scrum Extensions is a VS 2012 (< 0.1.0) / 2013 (<= 0.1.0) and 2015 (>= 0.2.0) Extension that helps Project Managers and Developers to easily plan an estimate tasks on Team Foundation Server.
 
 ## Getting Started
 
@@ -78,5 +78,4 @@ The default configuration file shipped is:
 
 ## How to report problems
 
-This is the very first release of this Extension. Although stable, bugs can be found.
 If you have any issue using this tool please report and issue using Github mechanisms.
