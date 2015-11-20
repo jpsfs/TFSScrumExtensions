@@ -1,13 +1,8 @@
-﻿using Microsoft.TeamFoundation.Controls;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.TeamFoundation.Controls.WPF.TeamExplorer;
-using JosePedroSilva.TFSScrumExtensions.Base;
-using System.ComponentModel.Composition;
+﻿using JosePedroSilva.TFSScrumExtensions.Base;
+using Microsoft.TeamFoundation.Controls;
 using Microsoft.VisualStudio.Shell;
+using System;
+using System.ComponentModel.Composition;
 
 namespace JosePedroSilva.TFSScrumExtensions.PlanWorkItem
 {

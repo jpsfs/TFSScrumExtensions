@@ -1,20 +1,10 @@
-﻿using JosePedroSilva.TFSScrumExtensions.BusinessObjects;
-using JosePedroSilva.TFSScrumExtensions.Configuration;
-using JosePedroSilva.TFSScrumExtensions.TeamFoundationClient;
-using Microsoft.TeamFoundation.Client;
+﻿using JosePedroSilva.TFSScrumExtensions.TeamFoundationClient;
 using Microsoft.TeamFoundation.Controls;
-using Microsoft.TeamFoundation.Server;
-using Microsoft.TeamFoundation.WorkItemTracking.Client;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.TeamFoundation;
 using Microsoft.VisualStudio.TeamFoundation.WorkItemTracking;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.Design;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace JosePedroSilva.TFSScrumExtensions.PlanWorkItem
 {

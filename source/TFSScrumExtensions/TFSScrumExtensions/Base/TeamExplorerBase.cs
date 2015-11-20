@@ -1,11 +1,10 @@
 ﻿// <copyright file="TeamExplorerBase.cs" company="Microsoft Corporation">Copyright Microsoft Corporation. All Rights Reserved. This code released under the terms of the Microsoft Public License (MS-PL, http://opensource.org/licenses/ms-pl.html.) This is sample code only, do not use in production environments.</copyright>
 namespace JosePedroSilva.TFSScrumExtensions.Base
 {
-    using System;
-    using System.ComponentModel;
-    using System.Diagnostics;
     using Microsoft.TeamFoundation.Client;
     using Microsoft.TeamFoundation.Controls;
+    using System;
+    using System.ComponentModel;
 
     /// <summary>
     /// Team Explorer extension common base class.

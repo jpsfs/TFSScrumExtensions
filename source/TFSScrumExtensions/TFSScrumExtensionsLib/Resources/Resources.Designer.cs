@@ -8,10 +8,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace JosePedroSilva.TFSScrumExtensions.Resources {
-    using System;
-    
-    
+namespace JosePedroSilva.TFSScrumExtensions.Resources
+{
+
+
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
