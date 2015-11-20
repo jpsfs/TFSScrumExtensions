@@ -2,8 +2,8 @@
 namespace JosePedroSilva.TFSScrumExtensions.Base
 {
 
-    using System;
     using Microsoft.TeamFoundation.Controls;
+    using System;
 
     /// <summary>
     /// Team Explorer base navigation link class.

@@ -1,14 +1,10 @@
 ﻿using JosePedroSilva.TFSScrumExtensions.BusinessObjects;
 using JosePedroSilva.TFSScrumExtensions.TeamFoundationClient;
 using Microsoft.TeamFoundation.Framework.Client;
-using Microsoft.TeamFoundation.Server;
 using Microsoft.TeamFoundation.WorkItemTracking.Client;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace JosePedroSilva.TFSScrumExtensions.PlanWorkItem

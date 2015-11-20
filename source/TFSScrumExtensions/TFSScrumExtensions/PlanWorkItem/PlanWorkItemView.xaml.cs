@@ -7,8 +7,6 @@
 
 using JosePedroSilva.TFSScrumExtensions.BusinessObjects;
 using JosePedroSilva.TFSScrumExtensions.Configuration;
-using JosePedroSilva.TFSScrumExtensions.TeamFoundationClient;
-using Microsoft.TeamFoundation.Controls;
 using Microsoft.TeamFoundation.WorkItemTracking.Client;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.TeamFoundation.WorkItemTracking;
@@ -17,17 +15,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace JosePedroSilva.TFSScrumExtensions.PlanWorkItem
 {

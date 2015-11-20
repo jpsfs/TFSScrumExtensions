@@ -1,0 +1,25 @@
+==================================================================
+=
+=          TFS Scrum Extensions
+=
+==================================================================
+
+Release 0.2.0:
+- Support for VS 2015;
+- Dropped Support for VS 2013;
+
+Release 0.1.0:
+- Dropped Support for VS 2012;
+- Hide Home ShortCut if Team Explorer is disconnected.
+- Copy Bug Repro Steps to Task Description if Base Work Item Description is empty.
+
+Release 0.0.6:
+- Support for Visual Studio Online;
+- Team Explorer Home ShortCut for Work Item Planning.
+
+Release 0.0.5:
+- Copy tags on Work Items (VS2013);
+
+Release 0.0.4:
+- Support to multiple project work items;
+- Multiple bug fixes;

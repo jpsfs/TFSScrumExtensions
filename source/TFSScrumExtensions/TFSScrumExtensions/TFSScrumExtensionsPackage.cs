@@ -1,20 +1,12 @@
-﻿using System;
+﻿using JosePedroSilva.TFSScrumExtensions.Configuration;
+using JosePedroSilva.TFSScrumExtensions.PlanWorkItem;
+using Microsoft.VisualStudio.Shell;
+using System;
+using System.ComponentModel.Design;
 using System.Diagnostics;
 using System.Globalization;
-using System.Runtime.InteropServices;
-using System.ComponentModel.Design;
-using Microsoft.Win32;
-using Microsoft.VisualStudio;
-using Microsoft.VisualStudio.Shell.Interop;
-using Microsoft.VisualStudio.OLE.Interop;
-using Microsoft.VisualStudio.Shell;
-using Microsoft.TeamFoundation.Controls;
-using Microsoft.VisualStudio.TeamFoundation.WorkItemTracking.Extensibility;
-using JosePedroSilva.TFSScrumExtensions.PlanWorkItem;
-using Microsoft.TeamFoundation.Common;
-using Microsoft.VisualStudio.TeamFoundation.WorkItemTracking;
-using JosePedroSilva.TFSScrumExtensions.Configuration;
 using System.IO;
+using System.Runtime.InteropServices;
 
 namespace JosePedroSilva.TFSScrumExtensions
 {
@@ -110,7 +102,7 @@ namespace JosePedroSilva.TFSScrumExtensions
         /// <param name="path">The path.</param>
         public static void LoadConfiguration(string path = null)
         {
-            if(path == null)
+            if (path == null)
             {
                 path = ConfigurationFilePath;
             }
@@ -169,7 +161,7 @@ namespace JosePedroSilva.TFSScrumExtensions
         /// </summary>
         protected override void Initialize()
         {
-            Debug.WriteLine (string.Format(CultureInfo.CurrentCulture, "Entering Initialize() of: {0}", this.ToString()));
+            Debug.WriteLine(string.Format(CultureInfo.CurrentCulture, "Entering Initialize() of: {0}", this.ToString()));
             base.Initialize();
 
             InternalInitialize();
@@ -189,9 +181,9 @@ namespace JosePedroSilva.TFSScrumExtensions
             }
 
             #endregion
-            
+
         }
-        
+
         #endregion
 
     }
